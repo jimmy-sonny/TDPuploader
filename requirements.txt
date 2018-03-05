@@ -1,0 +1,4 @@
+beautifulsoup4
+coloredlogs
+google-api-python-client
+progressbar2
