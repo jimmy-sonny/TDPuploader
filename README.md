@@ -29,6 +29,7 @@ Requires Python 3.4+
 
 ```
 git clone --recurse-submodules https://github.com/jimmy-sonny/TDPuploader
+cd TDPuploader
 pip install -r requirements.txt
 ```
 
