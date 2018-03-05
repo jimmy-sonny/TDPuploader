@@ -143,7 +143,7 @@ def parse_registro(page_content):
                 cc['type'] = cols[2]
                 cc['summary'] = cols[3]
                 cc['lecturer'] = cols[6]
-                log.info(" ".join([str(x) for x in cc.values()]))
+                log.info("Index:" + " ".join([str(x) for x in cc.values()]))
                 candidate_lectures.append(cc)
     except:
         log.exception("Parsing Regisro TDP caused an exception")
