@@ -28,14 +28,14 @@ Choose a lecture (range: 1-5):
 Requires Python 3.4+
 
 ```
-pip install -r requirements.txt
 git clone --recurse-submodules https://github.com/jimmy-sonny/TDPuploader
+pip install -r requirements.txt
 ```
 
 # Example
 
 ```
-$ ./tdpuploader.py
+./tdpuploader.py -v ../lecture_example.mp4 -cs my_client_secret.json
 ```
 
 # Licensing
