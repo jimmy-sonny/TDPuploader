@@ -3,7 +3,7 @@
 ![Language: Python3](https://img.shields.io/badge/language-python3-blue.svg)
 
 # Intro
-A python program to automatically upload "Tecniche di Programmazione" videolectures
+A Python program to automatically upload "Tecniche di Programmazione" videolectures
 
 ```
 $ ./tdpuploader.py
