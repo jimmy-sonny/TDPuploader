@@ -11,6 +11,7 @@
 import sys
 assert sys.version_info >= (3, 4)
 
+import os
 import signal
 import argparse
 from bs4 import BeautifulSoup
@@ -36,11 +37,25 @@ def signal_handler(signal, frame):
     sys.exit(0)
 
 
-def upload_lecture(title, description):
-    log.warning("TODO!")
+def upload_lecture(title, description, client_secret, video_path):
+    ''' Upload the selected video on YouTubne '''
+    cmd = ("youtube-upload/bin/youtube-upload "
+           "-t \"%s\" "
+           "-d \"%s\" "
+           "-c Education "
+           "--privacy=PUBLIC "
+           "--default-language=it "
+           "--default-audio-language=it "
+           "--playlist=TdP2018 "
+           "--client-secrets=\"%s\" "
+           "%s")
+    cmd = cmd % (title, description, client_secret, video_path)
+    log.warning(cmd)
+    os.system(cmd)
 
 
 def select_and_fill_lecture_info(candidate_lectures):
+    ''' Choose the right lecture '''
     indexes = [cc['index'] for cc in candidate_lectures]
     correctInput = False
     while not correctInput:
@@ -59,13 +74,14 @@ def select_and_fill_lecture_info(candidate_lectures):
     cc = candidate_lectures[choice - 1]
     log.info(cc)
 
-    title = "TdP-2017-%s%02d: %s" % (cc['type'],
+    title = "TdP-2018-%s%02d: %s" % (cc['type'],
                                      cc['lecture_number'], cc['summary'].split()[0])
     log.info("Suggested title: \"%s\"", title)
-    
+
     title_confirmed = False
     while not title_confirmed:
-        reply = str(input("Confirm title: \"%s\"" % title + ' (y/n): ')).lower().strip()
+        reply = str(input("Confirm title: \"%s\"" %
+                          title + ' (y/n): ')).lower().strip()
         if reply[:1] == 'y':
             title_confirmed = True
         if reply[:1] == 'n':
@@ -88,6 +104,7 @@ def select_and_fill_lecture_info(candidate_lectures):
 
 
 def parse_registro(page_content):
+    ''' Parse registro from TdP webpage '''
     soup = BeautifulSoup(page_content, 'html.parser')
     registro_div = soup.find('div', attrs={'itemprop': 'articleBody'})
     found = False
@@ -138,8 +155,10 @@ def parse_registro(page_content):
 def main():
     ''' That's main! '''
     parser = argparse.ArgumentParser(description='TDPuploader')
-    parser.add_argument('-d', '--debug', dest='debug',
-                        action='store_true', help='Log level debug')
+    parser.add_argument('-v', '--video', dest='video_path',
+                        required=True, help='Path of the video to upload on YouTube')
+    parser.add_argument('-cs', '--client-secret', dest='client_secret',
+                        required=True, help='Client secret JSON file (downloaded from G API console)')
     args = parser.parse_args()
 
     global log
@@ -147,15 +166,15 @@ def main():
     coloredlogs.install(fmt='%(asctime)s %(levelname)s:: %(message)s',
                         datefmt='%H:%M:%S', level='INFO', logger=log)
 
-    log.info("Donwloading Rgistro TDP")
+    log.info("Donwloading Rgistro TdP")
     page = requests.get(tdp_url)
     if page.status_code != 200:
-        log.error("Cannot dowload the tdp page")
+        log.error("Cannot dowload the TdP page")
         sys.exit(1)
 
     cl = parse_registro(page.content)
     t, d = select_and_fill_lecture_info(cl)
-    upload_lecture(t, d)
+    upload_lecture(t, d, args.client_secret, args.video_path)
 
 
 if __name__ == '__main__':
