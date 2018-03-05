@@ -11,15 +11,15 @@ $ ./tdpuploader.py
 TDPuploader - Upload TdP lesssons on your Youtube channel
 by Andrea Marcelli (!) v.0.1
 
-20:01:44 INFO:: Donwloading Rgistro TDP
-20:01:45 INFO:: Found "Registro" TDP
-20:01:45 INFO:: Parsing "Registro" TDP
-20:01:45 INFO:: 1 1 06/03/2018 16:00-17:30 L Introduzione al corso Fulvio Corno
-20:01:45 INFO:: 2 2 06/03/2018 17:30-19:00 L Introduzione a JavaFX Fulvio Corno
-20:01:45 INFO:: 3 3 12/03/2018 10:00-11:30 L Programmazione in JavaFX Fulvio Corno
-20:01:45 INFO:: 4 4 13/03/2018 16:00-17:30 L Java Objects, Java Collections Fulvio Corno
-20:01:45 INFO:: 5 5 13/03/2018 17:30-19:00 EA Java Objects, Java Collections Andrea Marcelli
-20:01:45 INFO:: Found 5 candidate lectures
+23:29:42 INFO:: Donwloading Rgistro TdP
+23:29:43 INFO:: Found "Registro" TDP
+23:29:43 INFO:: Parsing "Registro" TDP
+23:29:43 INFO:: Index:1 1 06/03/2018 16:00-17:30 L Introduzione al corso Fulvio Corno
+23:29:43 INFO:: Index:2 2 06/03/2018 17:30-19:00 L Introduzione a JavaFX Fulvio Corno
+23:29:43 INFO:: Index:3 3 12/03/2018 10:00-11:30 L Programmazione in JavaFX Fulvio Corno
+23:29:43 INFO:: Index:4 4 13/03/2018 16:00-17:30 L Java Objects, Java Collections Fulvio Corno
+23:29:43 INFO:: Index:5 5 13/03/2018 17:30-19:00 EA Java Objects, Java Collections Andrea Marcelli
+23:29:43 INFO:: Found 5 candidate lectures
 Choose a lecture (range: 1-5):
 ...
 ```
