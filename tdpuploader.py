@@ -166,6 +166,14 @@ def main():
     coloredlogs.install(fmt='%(asctime)s %(levelname)s:: %(message)s',
                         datefmt='%H:%M:%S', level='INFO', logger=log)
 
+    if not os.path.isfile(args.video_path):
+        log.error("%s does not exist!", args.video_path)
+        sys.exit(1)
+
+    if not os.path.isfile(args.client_secret):
+        log.error("%s does not exist!", args.client_secret)
+        sys.exit(1)
+
     log.info("Donwloading Rgistro TdP")
     page = requests.get(tdp_url)
     if page.status_code != 200:
