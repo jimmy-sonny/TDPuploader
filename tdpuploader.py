@@ -129,11 +129,22 @@ def parse_registro(page_content):
         for row in rows:
             raw_cols = row.find_all('td')
             cols = [x.text.strip() for x in raw_cols]
-            if cols[2] != "EL":
+            cols[4] = raw_cols[4]
+            log.debug(cols)
+
+            # Incrementa il numero di lezioni solo se compare L o EA
+            if cols[2] in ["L", "EA"]:
                 lecture_number += 1
 
-            # Se e' segnata una lezione (L, EA), ma non c'e' un video associato
-            if (cols[0]) and (not cols[4]) and (cols[2] != "EL"):
+            # C'e' una lezione associata
+            c_min_info = all([(len(cols[x]) > 0) for x in [0, 1, 2]])
+            # Non c'e' un video associato
+            c_youtube = not cols[4].find('a')
+            # E' una lezione
+            c_lecture_type = cols[2] in ["L", "EA"]
+            log.debug("%s %s %s", c_min_info, c_youtube, c_lecture_type)
+
+            if c_min_info and c_youtube and c_lecture_type:
                 counter += 1
                 cc = dict()
                 cc['index'] = counter
@@ -181,8 +192,11 @@ def main():
         sys.exit(1)
 
     cl = parse_registro(page.content)
-    t, d = select_and_fill_lecture_info(cl)
-    upload_lecture(t, d, args.client_secret, args.video_path)
+    if len(cl) > 0:
+        t, d = select_and_fill_lecture_info(cl)
+        upload_lecture(t, d, args.client_secret, args.video_path)
+    else:
+        log.error("TDPuploader didn't found any candidate lecture :(")
 
 
 if __name__ == '__main__':
