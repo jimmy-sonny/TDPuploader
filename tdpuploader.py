@@ -196,7 +196,7 @@ def main():
         t, d = select_and_fill_lecture_info(cl)
         upload_lecture(t, d, args.client_secret, args.video_path)
     else:
-        log.error("TDPuploader didn't found any candidate lecture :(")
+        log.error("TDPuploader didn't find any candidate lecture :(")
 
 
 if __name__ == '__main__':
