@@ -17,6 +17,8 @@ import argparse
 from bs4 import BeautifulSoup
 import requests
 
+from .youtubeuploader import *
+
 import coloredlogs
 import logging
 log = None
@@ -35,23 +37,6 @@ def signal_handler(signal, frame):
     log.critical('You pressed Ctrl+C!')
     log.critical('Finishing')
     sys.exit(0)
-
-
-def upload_lecture(title, description, client_secret, video_path):
-    ''' Upload the selected video on YouTubne '''
-    cmd = ("youtube-upload/bin/youtube-upload "
-           "-t \"%s\" "
-           "-d \"%s\" "
-           "-c Education "
-           "--privacy=PUBLIC "
-           "--default-language=it "
-           "--default-audio-language=it "
-           "--playlist=TdP2018 "
-           "--client-secrets=\"%s\" "
-           "%s")
-    cmd = cmd % (title, description, client_secret, video_path)
-    log.warning(cmd)
-    os.system(cmd)
 
 
 def select_and_fill_lecture_info(candidate_lectures):
@@ -178,11 +163,13 @@ def main():
                         datefmt='%H:%M:%S', level='INFO', logger=log)
 
     if not os.path.isfile(args.video_path):
-        log.error("%s does not exist!", args.video_path)
+        log.error("Video (%s) does not exist!", args.video_path)
         sys.exit(1)
 
+    log.info("Video file size: %d MB", int(os.path.getsize(args.video_path)/(1024*1024)))
+
     if not os.path.isfile(args.client_secret):
-        log.error("%s does not exist!", args.client_secret)
+        log.error("Client secret (%s) does not exist!", args.client_secret)
         sys.exit(1)
 
     log.info("Donwloading Rgistro TdP")
