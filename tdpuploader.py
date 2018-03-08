@@ -91,7 +91,7 @@ def select_and_fill_lecture_info(candidate_lectures):
     log.warning("DESCRIPTION:")
     if cc['type'] == "L":
         l_type = "Lezione"
-    elif cc['type'] == "EA":
+    elif cc['type'] == "L":
         l_type = "Esercitazione in aula"
     description = "%s n.%02d del %s: %s" % (
         l_type, cc['lecture_number'], cc['date'], cc['summary'])
@@ -139,7 +139,7 @@ def parse_registro(page_content):
             # C'e' una lezione associata
             c_min_info = all([(len(cols[x]) > 0) for x in [0, 1, 2]])
             # Non c'e' un video associato
-            c_youtube = not cols[4].find('a')
+            c_youtube = not len(cols[4].findChildren())
             # E' una lezione
             c_lecture_type = cols[2] in ["L", "EA"]
             log.debug("%s %s %s", c_min_info, c_youtube, c_lecture_type)
