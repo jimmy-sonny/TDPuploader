@@ -1,4 +1,4 @@
 beautifulsoup4
 coloredlogs
 google-api-python-client
-progressbar2
+oauth2client==3.0.0
