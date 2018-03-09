@@ -56,7 +56,7 @@ YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
 
-def get_authenticated_service(client_secret):
+def get_authenticated_service(client_secret, args):
     flow = flow_from_clientsecrets(client_secret,
                                    scope=YOUTUBE_UPLOAD_SCOPE,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
@@ -65,7 +65,7 @@ def get_authenticated_service(client_secret):
     credentials = storage.get()
 
     if credentials is None or credentials.invalid:
-        credentials = run_flow(flow, storage)
+        credentials = run_flow(flow, storage, args)
 
     return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                  http=credentials.authorize(httplib2.Http()))
@@ -144,10 +144,10 @@ def resumable_upload(insert_request, file_size):
     print(response)
 
 
-def upload_lecture(title, description, client_secret, video_path):
+def upload_lecture(title, description, client_secret, video_path, args):
     ''' Upload the selected video on YouTubne '''
 
-    youtube = get_authenticated_service(client_secret)
+    youtube = get_authenticated_service(client_secret, args)
     try:
         initialize_upload(youtube, video_path, title, description)
     except HttpError as e:

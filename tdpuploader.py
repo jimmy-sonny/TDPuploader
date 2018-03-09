@@ -17,7 +17,7 @@ import argparse
 from bs4 import BeautifulSoup
 import requests
 
-from .youtubeuploader import *
+import ytuploader as ytup
 
 import coloredlogs
 import logging
@@ -181,7 +181,7 @@ def main():
     cl = parse_registro(page.content)
     if len(cl) > 0:
         t, d = select_and_fill_lecture_info(cl)
-        upload_lecture(t, d, args.client_secret, args.video_path)
+        ytup.upload_lecture(t, d, args.client_secret, args.video_path, args)
     else:
         log.error("TDPuploader didn't find any candidate lecture :(")
 
